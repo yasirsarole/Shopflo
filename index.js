@@ -1,4 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // filter function
+  let tileColor = [];
+  let tileContent = '';
+  const filterFunction = (color, content) => {
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.classList.remove('hide');
+
+      if (tile.dataset.content.includes(content) && (!color.length || color.includes(tile.style['background-color']))) {
+        tile.classList.remove('hide');
+      } else {
+        tile.classList.add('hide');
+      }
+    })
+  }
+
   // fetch colors
   const getColors = fetch('https://random-flat-colors.vercel.app/api/random?count=5');
   let colorsContainer = document.querySelectorAll('.colors-container');
@@ -80,6 +95,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.nodeName === 'LI') {
       e.target.classList.add('selected');
       document.querySelector('.hidden-color').value = e.target.style['background-color'];
+    } else {
+      document.querySelectorAll('li').forEach(list => {
+        list.classList.remove('selected')
+      });
+
+      document.querySelector('.hidden-color').value = '';
     }
   });
 
@@ -88,23 +109,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const tiles = document.querySelectorAll('.tile');
   containerFilterList.addEventListener('click', (e) => {
     if (e.target.nodeName === 'LI') {
-      const color = e.target.style['background-color'];
-
+      // console.log('color', e.target.classList.contains('selected'))
       if (e.target.classList.contains('selected')) {
         e.target.classList.remove('selected');
 
-        tiles.forEach(tile => {
-          tile.classList.remove('hide');
-        })
+        const index = tileColor.indexOf(e.target.style['background-color']);
+        // console.log('index', index)
+        if (index > -1) {
+          tileColor.splice(index, 1);
+        }
       } else {
+        // console.log('sarole')
+        tileColor.push(e.target.style['background-color']);
         e.target.classList.add('selected');
-
-        tiles.forEach(tile => {
-          if (tile.style['background-color'] !== color) {
-            tile.classList.add('hide');
-          }
-        })
       }
+
+      // console.log('tileColor', tileColor);
+      // console.log('tileContent', tileContent);
+      filterFunction(tileColor, tileContent);
     }
   });
 
@@ -120,15 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   const filteredText = document.querySelector('.container__filter__search');
   filteredText.addEventListener('input', debounce((e) => {
-    const value = e.target.value;
-    document.querySelectorAll('.tile').forEach(tile => {
-      tile.classList.remove('hide');
-
-      if (!tile.dataset.content.includes(value)) {
-        tile.classList.add('hide');
-      } else {
-        tile.classList.remove('hide');
-      }
-    })
-  }, 1000))
+    tileContent = e.target.value;
+    filterFunction(tileColor, tileContent);
+  }, 1000));
 })
