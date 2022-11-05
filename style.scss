@@ -11,6 +11,14 @@ main {
   font-family: sans-serif;
   display: flex;
 
+  input {
+    padding: 10px 20px;
+    margin-top: 10px;
+    width: 250px;
+    border: 2px solid #000;
+    border-radius: 5px;
+  }
+
   .container,
   .sidebar {
     padding: 50px 25px;
@@ -27,11 +35,25 @@ main {
 
   button {
     cursor: pointer;
+    padding: 8px 25px;
+    background: transparent;
+    border: 2px solid #000;
+    font-size: 14px;
+    font-weight: bold;
+
+    &.disable {
+      pointer-events: none;
+      opacity: 0.5;
+    }
   }
 
   .error-message {
     color: red;
     font-size: 14px;
+  }
+
+  .colors-container {
+    margin-top: 10px;
   }
 
   ul {
@@ -66,6 +88,16 @@ main {
 
   &__filter {
     margin-bottom: 30px;
+    display: flex;
+
+    &__colors {
+      margin-right: 25px;
+    }
+
+    &__title {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__creatives {
@@ -135,5 +167,12 @@ main {
   &__filter__colors,
   .form-group {
     margin-bottom: 30px;
+  }
+
+  &__form {
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
