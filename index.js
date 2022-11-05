@@ -2,14 +2,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // filter function
   let tileColor = [];
   let tileContent = '';
+  const filteredText = document.querySelector('.container__filter__search');
+  const filterContainer = document.querySelector('.container__filter');
+
   const filterFunction = (color, content) => {
     document.querySelectorAll('.tile').forEach(tile => {
-      tile.classList.remove('hide');
+      tile.classList.add('hide');
 
       if (tile.dataset.content.includes(content) && (!color.length || color.includes(tile.style['background-color']))) {
         tile.classList.remove('hide');
-      } else {
-        tile.classList.add('hide');
       }
     })
   }
@@ -45,8 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('li').forEach(list => {
       list.classList.remove('selected')
     });
+    tileColor = [];
+    filteredText.value = '';
+    filterFunction([], '');
     document.querySelector('.hidden-color').value = '';
     error.textContent = 'Please fill all the fields.';
+
+    // disable filters unless adding elements
+    filterContainer.classList.add('disable')
 
     sideBarForm.reset();
     e.target.classList.add('disable');
@@ -59,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   sideBarClose.addEventListener('click', (e) => {
     addCreativeButton.classList.remove('disable');
     sidebar.classList.add('hide');
+    filterContainer.classList.remove('disable');
   });
 
   // create tiles
@@ -109,23 +117,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const tiles = document.querySelectorAll('.tile');
   containerFilterList.addEventListener('click', (e) => {
     if (e.target.nodeName === 'LI') {
-      // console.log('color', e.target.classList.contains('selected'))
       if (e.target.classList.contains('selected')) {
         e.target.classList.remove('selected');
 
         const index = tileColor.indexOf(e.target.style['background-color']);
-        // console.log('index', index)
         if (index > -1) {
           tileColor.splice(index, 1);
         }
       } else {
-        // console.log('sarole')
         tileColor.push(e.target.style['background-color']);
         e.target.classList.add('selected');
       }
 
-      // console.log('tileColor', tileColor);
-      // console.log('tileContent', tileContent);
       filterFunction(tileColor, tileContent);
     }
   });
@@ -140,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, delay);
     };
   };
-  const filteredText = document.querySelector('.container__filter__search');
   filteredText.addEventListener('input', debounce((e) => {
     tileContent = e.target.value;
     filterFunction(tileColor, tileContent);

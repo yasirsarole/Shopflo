@@ -45,9 +45,10 @@ main {
       height: 30px;
       border-radius: 50%;
       margin: 0 20px 20px 0;
-      cursor: pointer; }
+      cursor: pointer;
+      border: 5px solid transparent; }
       main ul li.selected {
-        border: 5px solid #000; }
+        border-color: #000; }
 
 .container {
   overflow-y: auto;
@@ -58,6 +59,9 @@ main {
   .container__filter {
     margin-bottom: 30px;
     display: flex; }
+    .container__filter.disable {
+      pointer-events: none;
+      opacity: 0.5; }
     .container__filter__colors {
       margin-right: 25px; }
     .container__filter__title {
