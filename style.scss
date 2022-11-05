@@ -1,8 +1,139 @@
-.container {
+body {
+  overflow: hidden;
+
+  .hide {
+    display: none;
+  }
+}
+
+// common stylings
+main {
   font-family: sans-serif;
-  padding: 30px;
+  display: flex;
+
+  .container,
+  .sidebar {
+    padding: 50px 25px;
+  }
 
   h2 {
     font-size: 25px;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 14px;
+  }
+
+  ul {
+    display: flex;
+    max-width: 248px;
+    flex-wrap: wrap;
+    align-items: center;
+
+    li {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 0 20px 20px 0;
+      cursor: pointer;
+
+      &.selected {
+        border: 5px solid #000;
+      }
+    }
+  }
+}
+
+// left container styling
+.container {
+  overflow-y: auto;
+  height: calc(100vh - 50px);
+  flex: 1;
+
+  h2 {
+    margin-bottom: 50px;
+  }
+
+  &__filter {
+    margin-bottom: 30px;
+  }
+
+  &__creatives {
+    margin-bottom: 30px;
+
+    &__range-container {
+      margin-bottom: 30px;
+      display: flex;
+    }
+
+    .range-container__range {
+      width: 300px;
+      display: block;
+      height: 15px;
+      border: 1px solid #000;
+      margin-right: 10px;
+      border-radius: 5px;
+    }
+  }
+
+  &__tiles {
+    .tile {
+      padding: 50px;
+      max-width: 200px;
+      border: 2px solid;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: bold;
+
+      span {
+        display: block;
+      }
+
+      .title {
+        margin-bottom: 10px;
+        font-size: 20px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+// sidebar styling
+.sidebar {
+  height: 100vh;
+  border-left: 3px solid #000;
+  min-width: 400px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+
+    figure {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+  }
+
+  &__form,
+  &__filter__colors,
+  .form-group {
+    margin-bottom: 30px;
   }
 }
